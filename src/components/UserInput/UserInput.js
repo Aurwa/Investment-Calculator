@@ -1,14 +1,31 @@
+import { useState } from "react";
+
+const initialUserInput = {
+  "current-savings": 10000,
+  "yearly-contribution": 1200,
+  "expected-return": 7,
+  duration: 10,
+};
+
 const UserInput = () => {
+  const [userInput, setUserInput] = useState(initialUserInput);
+
   const submitHandler = (event) => {
     event.preventDefault();
+    console.log(userInput);
   };
 
   const resetHandler = () => {
-    console.log("Reset");
+    setUserInput(initialUserInput);
   };
 
   const inputChangeHandler = (input, value) => {
-    console.log(input, value);
+    setUserInput((prevInput) => {
+      return {
+        ...prevInput,
+        [input]: value,
+      };
+    });
   };
 
   return (
@@ -22,6 +39,7 @@ const UserInput = () => {
             }
             type="number"
             id="current-savings"
+            value={userInput["current-savings"]}
           />
         </p>
         <p>
@@ -32,6 +50,7 @@ const UserInput = () => {
             }
             type="number"
             id="yearly-contribution"
+            value={userInput["yearly-contribution"]}
           />
         </p>
       </div>
@@ -43,6 +62,7 @@ const UserInput = () => {
           <input
             type="number"
             id="expected-return"
+            value={userInput["expected-return"]}
             onChange={(event) =>
               inputChangeHandler("expected-return", event.target.value)
             }
@@ -53,6 +73,7 @@ const UserInput = () => {
           <input
             type="number"
             id="duration"
+            value={userInput["duration"]}
             onChange={(event) =>
               inputChangeHandler("duration", event.target.value)
             }
